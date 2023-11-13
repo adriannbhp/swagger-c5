@@ -5,16 +5,16 @@ info:
     Jelaskan disini apa saja yang perlu dijelaskan
     termasuk informasi yang diperlukan untuk dinilai
     term of service isi dari link repo dari swagger ini
-  termsOfService: https://raulmahya123.github.io/sweggergis/
+  termsOfService: https://github.com/adriannbhp/swagger-c5
   contact:
-    email: raulmahya11@gmail.com
+    email: adrianbimohernawanp@gmail.com
   license:
-    name: Fancy Backend
-    url: https://pkg.go.dev/github.com/Fancypedia/fancybackenddd
+    name: Adrian Backend
+    url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
   version: 1.0.11
 externalDocs:
   description: Repo GCF
-  url: https://pkg.go.dev/github.com/Fancypedia/fancybackenddd
+  url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
 servers:
   - url: https://asia-southeast2-testlogin-366704.cloudfunctions.net
 tags:
@@ -22,12 +22,12 @@ tags:
     description: Data Geo Spasial
     externalDocs:
       description: Deskripsi dan Kode Program
-      url: https://pkg.go.dev/github.com/Fancypedia/fancybackenddd
+      url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
   - name: auth
     description: Auth to Access to API
     externalDocs:
       description: Deskripsi dan Kode Program
-      url: https://pkg.go.dev/github.com/Fancypedia/fancybackenddd
+      url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
   - name: user
     description: Get Token and Authorize
 paths:
