@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: DOKUMEN API GIS Adrian - OpenAPI 3.0
+  title: Dokumen API Cloud Function - OpenAPI 3.0
   description: >-
     Jelaskan disini apa saja yang perlu dijelaskan
     termasuk informasi yang diperlukan untuk dinilai
@@ -9,79 +9,302 @@ info:
   contact:
     email: adrianbimohernawanp@gmail.com
   license:
-    name: Adrian Backend
-    url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
-  version: 1.0.11
+    name: Peda Package
+    url: https://pkg.go.dev/github.com/Fancyyy21/BackendGIS
+  version: 1.0.3
 externalDocs:
   description: Repo GCF
-  url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
+  url: https://pkg.go.dev/github.com/Fancyyy21/BackendGIS
 servers:
-  - url: https://asia-southeast2-testlogin-366704.cloudfunctions.net
+  - url: https://asia-southeast2-kinetic-calling-401502.cloudfunctions.net
 tags:
-  - name: Create GIS
-    description: Data Geo Spasial
+  - name: Registrasi
+    description: Membuat akun user dengan password terenkripsi
     externalDocs:
       description: Deskripsi dan Kode Program
-      url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
-  - name: auth
-    description: Auth to Access to API
+      url: https://pkg.go.dev/github.com/Fancyyy21/BackendGIS #yang ini blom diganti ====================================================================
+  - name: Login
+    description: Mendapatkan token menggunakan akun user yang telah dibuat
     externalDocs:
       description: Deskripsi dan Kode Program
-      url: https://pkg.go.dev/github.com/adriannbhp/go-pkg/
-  - name: user
-    description: Get Token and Authorize
+      url: https://pkg.go.dev/github.com/Fancyyy21/BackendGIS #yang ini blom diganti ====================================================================
 paths:
-  /createpostgisline-3: # Penambahan endpoint Create GIS
+  /signup-1fancy:
     post:
       tags:
-        - Create GIS
-      summary: Create GIS Data
-      description: Add new GIS data
-      operationId: createGIS
+        - Registrasi
+      summary: Registrasi User
+      description: Membuat akun user dengan password terenkripsi
+      operationId: MembuatUser
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Peta" # Gunakan skema yang sesuai di sini
+              $ref: "#/components/schemas/User"
       responses:
-        "201":
-          description: Data successfully created
-        "400":
-          description: Invalid input or request body
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
       security:
-        - SECRET:
+        - token:
             - write:apiKey
-            - read:SECRET
-
+            - read:apiKey
+  /signin-1fancy:
+    post:
+      tags:
+        - Login
+      summary: Mendapatkan token untuk login
+      description: Masukkan username dan password yang telah didaftarkan
+      operationId: MembuatTokenUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsernameNPassword"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsernameNPassword"
+      security:
+        - token:
+            - write:apiKey
+            - read:apiKey
+  /BuatGeojsonPoint:
+    post:
+      tags:
+        - Geojson
+      summary: Menambah Data Point Geojson
+      description: Menambah point geojson ke mongodb
+      operationId: MembuatGeojsonPoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Point"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Point"
+      security:
+        - token:
+            - write:apiKey
+            - read:apiKey
+  /BuatGeojsonPolyline:
+    post:
+      tags:
+        - Geojson
+      summary: Menambah Data Polyline Geojson
+      description: Menambah polyline geojson ke mongodb
+      operationId: MembuatGeojsonPolyline
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Polyline"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Polyline"
+      security:
+        - token:
+            - write:apiKey
+            - read:apiKey
+  /BuatGeojsonPolygon:
+    post:
+      tags:
+        - Geojson
+      summary: Menambah Data Polygon Geojson
+      description: Menambah polygon geojson ke mongodb
+      operationId: MembuatGeojsonPolygon
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Polygon"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Polygon"
+      security:
+        - token:
+            - write:apiKey
+            - read:apiKey
+  /BuatAmbilDataGeojson:
+    get:
+      tags:
+        - Geojson
+      summary: Ambil Data Geojson
+      description: Mengambil geojson dari mongodb
+      operationId: AmbilDataGeojson
+      requestBody:
+        content:
+          application/json:
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Geojson"
+      security:
+        - token:
+            - write:apiKey
+            - read:apiKey
 components:
   schemas:
-    Peta:
+    Geojson:
       type: object
       properties:
         type:
           type: string
-          example: "Feature"
-        properties:
-          type: object
-          properties:
-            name:
-              type: string
-              example: "LOKASI"
         geometry:
           type: object
           properties:
             type:
               type: string
-              example: "Point"
             coordinates:
               type: array
-              items:
-                - type: array
-                  items:
-                    - [125.6, 10.1]
+        properties:
+          type: object
+          properties:
+            name:
+              type: string
+    Point:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Feature
+        properties:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Contoh Point
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Point
+            coordinates:
+              type: array
+              example: [103.62304801308028, -1.6286912230149255]
+    Polyline:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Feature
+        properties:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Contoh Polyline
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              example: LineString
+            coordinates:
+              type: array
+              example:
+                [
+                  [103.62505530793163, -1.6288798067939751],
+                  [103.62395435305416, -1.6290723960335356],
+                  [103.62136160431874, -1.6280544241267023],
+                ]
+    Polygon:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Feature
+        properties:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Contoh Polygon
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              example: Polygon
+            coordinates:
+              type: array
+              example:
+                [
+                  [
+                    [103.62266157176862, -1.6284887975001965],
+                    [103.62266157176862, -1.6285986746736683],
+                    [103.62284935445302, -1.6285986746736683],
+                    [103.62284935445302, -1.6284887975001965],
+                    [103.62266157176862, -1.6284887975001965],
+                  ],
+                ]
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          example: maulanaadmin123
+        password:
+          type: string
+          example: maulanaadmin123
+        role:
+          type: string
+          example: user
+    UsernameNPassword:
+      type: object
+      properties:
+        username:
+          type: string
+          example: maulanaadmin123
+        password:
+          type: string
+          example: maulanaadmin123
+    UsernameOnly:
+      type: object
+      properties:
+        username:
+          type: string
+          example: maulanaadmin123
+  requestBodies:
+    AuthReq:
+      description: Request Authentication
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Auth"
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/AuthResponse"
   securitySchemes:
-    SECRET:
+    token:
       type: apiKey
-      name: SECRET
+      name: token
       in: header
